@@ -80,8 +80,17 @@ def ranking_tabela(contagem, n=15):
 def buscar_por_pais(pais, categoria="technology"):
     url = "https://newsapi.org/v2/top-headlines"
     params = {"country": pais, "category": categoria, "apiKey": API_KEY}
-    r = requests.get(url, params=params, timeout=10).json()
-    return r.get("articles", [])
+    try:
+        r = requests.get(url, params=params, timeout=10)
+        dados = r.json()
+    except requests.RequestException as e:
+        print("Erro de conexão:", e)
+        return []
+
+    if r.status_code != 200 or dados.get("status") != "ok":
+        print("Erro da API:", dados.get("message"))
+        return []
+    return dados.get("articles", [])
 
 def agrupar_por_data(artigos):
     df = pd.DataFrame(artigos)
@@ -112,7 +121,8 @@ def mostrar_por_regiao(paises, categoria="technology"):
 def mostrar_por_tema(temas):
     for tema in temas:
         arts = buscar_noticias(tema, qtd=30)
-        palavras = limpar_e_tokenizar(extrair_textos(arts))
+        stop = STOP_PT | set(tema.lower().split())
+        palavras = limpar_e_tokenizar(extrair_textos(arts), stop)
         print(f"\n[{tema.upper()}] {len(arts)} notícias")
         print("  Top palavras:", Counter(palavras).most_common(5))
 
