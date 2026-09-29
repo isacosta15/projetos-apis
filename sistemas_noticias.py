@@ -87,7 +87,7 @@ def agrupar_por_data(artigos):
     df = pd.DataFrame(artigos)
     df["data"] = pd.to_datetime(df["publishedAt"]).dt.date
     for data, grupo in df.groupby("data"):
-        print(f"\n📅 {data} ({len(grupo)} notícias)")
+        print(f"\n{data} ({len(grupo)} notícias)")
         for titulo in grupo["title"].head(3):
             print("  -", titulo)
 
