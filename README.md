@@ -22,9 +22,14 @@ Utiliza a API **OpenWeatherMap** para consultar informações como temperatura, 
 
 Utiliza a API **The Movie Database (TMDb)** para consultar filmes, avaliações, gêneros, elenco e outras informações.
 
-### 📰 3. Sistema de Notícias (sistemas_noticias e .env)
+### 📰 3. Sistema de Notícias (sistemas_noticias)
 
-Utiliza uma API de notícias para coletar manchetes e realizar uma análise das palavras mais frequentes.
+Utiliza a **NewsAPI** para coletar manchetes, contar a frequência das palavras e gerar uma nuvem de palavras. Inclui ranking em tabela e separação das notícias por data, região e tema.
+
+Configuração & Uso:
+1. Renomeie o arquivo `.env.example` para `.env` e coloque sua chave da NewsAPI
+2. Instale: `pip install requests python-dotenv nltk matplotlib wordcloud pandas`
+3. Execute: `python sistemas_noticias.py`
 
 ## 🛠️ Tecnologias
 
